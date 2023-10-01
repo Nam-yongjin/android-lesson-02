@@ -11,15 +11,15 @@
     <head>
         <script type="application/javascript">
             function fetchFileList() {
-                fetch('/api/files')
+                fetch('/api/v1/rest/aws/list')
                     .then(response => response.json())
                     .then(data => {
                         const fileListElement = document.getElementById('file_list');
 
                         data.forEach(file => {
                             const downloadLink = document.createElement('a');
-                            downloadLink.href = '/api/download/' + file.id;
-                            downloadLink.innerText = file.name;
+                            downloadLink.href = '/api/v1/rest/aws/download?fileName=' + encodeURIComponent(file);
+                            downloadLink.innerText = file;
                             const listItem = document.createElement('li');
                             listItem.appendChild(downloadLink);
                             fileListElement.appendChild(listItem);
