@@ -10,7 +10,25 @@
     </body>
     <head>
         <script type="application/javascript">
-            // 이곳에 코드를 작성하십시오.
+            function fetchFileList() {
+                fetch('/api/files')
+                    .then(response => response.json())
+                    .then(data => {
+                        const fileListElement = document.getElementById('file_list');
+
+                        data.forEach(file => {
+                            const downloadLink = document.createElement('a');
+                            downloadLink.href = '/api/download/' + file.id;
+                            downloadLink.innerText = file.name;
+                            const listItem = document.createElement('li');
+                            listItem.appendChild(downloadLink);
+                            fileListElement.appendChild(listItem);
+                        });
+                    })
+                    .catch(error => console.error('파일 목록을 불러오는 동안 오류 발생:', error));
+            }
+
+            window.onload = fetchFileList;
         </script>
     </head>
 </html>
